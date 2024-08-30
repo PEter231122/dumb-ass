@@ -2,7 +2,7 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 local Window = Fluent:CreateWindow({
-    Title = "tao dep trai dai doan cuoi bu lul tre em sac cuc cheo",
+    Title = "Nguyen dep trai ne:D",
     SubTitle = "Beta Version",
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 350),
@@ -4182,7 +4182,7 @@ ToggleAutoW:OnChanged(function(Value)
 
 
     Tabs.Main:AddButton({
-        Title = "Bay đến Chỗ Cao Nhất",
+        Title = "Fly highest",
         Description = "",
         Callback = function()
             TwenetoHighestPoint()
