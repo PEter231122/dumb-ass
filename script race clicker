@@ -1,0 +1,21 @@
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/Refinement/main/UI-th%20Library%20v0.1.2"))()
+local window = Lib:CreateWindow("Race Clicker")
+local tab = window:CreateTab("Hacks")
+
+tab:CreateToggle("Auto Win",false,function(win) 
+
+    if win == true  then
+    _G.wins = true
+    while  _G.wins == true do
+    local CFrameEnd = CFrame.new(-442415.71875, 2.9999988079071045, -70.02269744873047) -- Place your coords in here
+    local Time = 1-- Time in seconds
+    local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
+    tween:Play(0.1)
+    tween.Completed:Wait()
+    wait()
+    end
+    else
+    _G.wins = false
+    end
+    end)
+    
