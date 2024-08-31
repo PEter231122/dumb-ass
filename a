@@ -25,14 +25,18 @@ local Tabs = {
 }
 local tab = Tabs.Main
 
+-- Create the key input field
+local KeyInput = tab:CreateInput("Key", "Enter your key...", "Password")
+local Key = ""
+
 -- Create the auto-click toggle
-tab:CreateToggle("Auto Click", false, function(bool)
+local AutoClickToggle = tab:CreateToggle("Auto Click", false, function(bool)
     if bool == true then
         _G.AutoClick = true
         spawn(function()
             while _G.AutoClick == true do
                 ReplicatedStorage.Packages.Knit.Services.ClickService.RF.Click:InvokeServer()
-                wait(0) -- add a 0.5 second delay between each invocation
+                wait(0.5) -- add a 0.5 second delay between each invocation
             end
         end)
     else
@@ -65,5 +69,18 @@ Players.LocalPlayer.Idled:connect(function()
     VirtualUser:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
--- Call the anti-ban function
-AntiBan()
+-- Key validation
+KeyInput.FocusLost:connect(function()
+    if KeyInput.Text == "212011" then
+        Key = KeyInput.Text
+        AutoClickToggle:SetEnabled(true)
+        AntiBan()
+    else
+        KeyInput.Text = "sai r thg loz!"
+        wait(1)
+        KeyInput.Text = "nhap key"
+    end
+end)
+
+-- Disable the auto-click toggle until the key is validated
+AutoClickToggle:SetEnabled(false)
