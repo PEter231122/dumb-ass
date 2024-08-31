@@ -1,21 +1,50 @@
--- Define the teleport function
-local function teleportToLocation(cframe)
-    -- Get the player's character
-    local character = game.Players.LocalPlayer.Character
-    
-    -- Check if the character exists
-    if character then
-        -- Get the HumanoidRootPart
-        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-        
-        -- Check if the HumanoidRootPart exists
-        if humanoidRootPart then
-            -- Set the CFrame of the HumanoidRootPart to the desired location
-            humanoidRootPart.CFrame = cframe
-        end
+local teleport_table = {
+    location1 = Vector3.new(3.13730907, -3.58797455, 0), -- your desired position
+    location2 = Vector3.new(0, 0, 1),  -- your desired position
+    location3 = Vector3.new(0, 1, 0),  -- your desired position
+    location4 = Vector3.new(0, 0, -1),  -- your desired position
+    location5 = Vector3.new(0, 0, 0)  -- your desired position
+}
+
+local tween_s = game:GetService('TweenService')
+local tweeninfo = TweenInfo.new(1,Enum.EasingStyle.Linear)
+
+local lp = game.Players.LocalPlayer
+
+function bypass_teleport(v)
+    if lp.Character and 
+    lp.Character:FindFirstChild('HumanoidRootPart') then
+        local cf = CFrame.new(v.X, v.Y, v.Z)
+        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
+        a:Play()
+        -- a.Completed:Wait()
+        -- print('Teleporting Done!')
     end
 end
 
--- Example usage: Teleport to the specified CFrame
-local cframe = CFrame.new(1.75, 3, 19237947, -3.58797455, 0, 0, 1, 0, 1, 0, -1, 0, 0)
-teleportToLocation(cframe)
+-- Create UI Button
+local player_gui = game.Players.LocalPlayer.PlayerGui
+local auto_win_button = Instance.new("TextButton")
+auto_win_button.Size = UDim2.new(0, 200, 0, 50)
+auto_win_button.Position = UDim2.new(0, 10, 0, 10)
+auto_win_button.Text = "Auto Win"
+auto_win_button.FontSize = Enum.FontSize.Size24
+auto_win_button.Font = Enum.Font.SourceSans
+auto_win_button.TextColor3 = Color3.new(1, 1, 1)
+auto_win_button.BackgroundColor3 = Color3.new(0, 1, 0)
+
+auto_win_button.Parent = player_gui
+
+-- Add event listener to the button
+auto_win_button.MouseButton1Click:Connect(function()
+    -- Teleport to the desired location
+    bypass_teleport(teleport_table.location1)
+    -- or
+    -- bypass_teleport(teleport_table.location2)
+    -- or
+    -- bypass_teleport(teleport_table.location3)
+    -- or
+    -- bypass_teleport(teleport_table.location4)
+    -- or
+    -- bypass_teleport(teleport_table.location5)
+end)
