@@ -1,6 +1,14 @@
+-- Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local VirtualUser = game:GetService("VirtualUser")
+
+-- Load Fluent and its addons
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+-- Create the window
 local Window = Fluent:CreateWindow({
     Title = "Nguyen dep trai ne:D",
     SubTitle = "Beta Version",
@@ -10,19 +18,21 @@ local Window = Fluent:CreateWindow({
     Theme = "Rose",
     MinimizeKey = Enum.KeyCode.End
 })
+
+-- Create the main tab
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "" }),
 }
-local Options = Fluent.Options
-
 local tab = Tabs.Main
+
+-- Create the auto-click toggle
 tab:CreateToggle("Auto Click", false, function(bool)
     if bool == true then
         _G.AutoClick = true
         spawn(function()
             while _G.AutoClick == true do
-                game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click:InvokeServer()
-                wait(0.5) -- add a 0.5 second delay between each invocation
+                ReplicatedStorage.Packages.Knit.Services.ClickService.RF.Click:InvokeServer()
+                wait(0) -- add a 0.5 second delay between each invocation
             end
         end)
     else
@@ -30,16 +40,16 @@ tab:CreateToggle("Auto Click", false, function(bool)
     end
 end)
 
--- Add the anti-ban function
+-- Anti-ban function
 local function AntiBan()
-    for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+    for i,v in pairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("LocalScript") then
             if v.Name == "General" or v.Name == "Shiftlock"  or v.Name == "FallDamage" or v.Name == "4444" or v.Name == "CamBob" or v.Name == "JumpCD" or v.Name == "Looking" or v.Name == "Run" then
                 v:Destroy()
             end
         end
     end
-    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerScripts:GetDescendants()) do
+    for i,v in pairs(Players.LocalPlayer.PlayerScripts:GetDescendants()) do
         if v:IsA("LocalScript") then
             if v.Name == "RobloxMotor6DBugFix" or v.Name == "Clans"  or v.Name == "Codes" or v.Name == "CustomForceField" or v.Name == "MenuBloodSp"  or v.Name == "PlayerList" then
                 v:Destroy()
@@ -48,11 +58,11 @@ local function AntiBan()
     end
 end
 
--- Add the idle detection
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-    game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+-- Idle detection
+Players.LocalPlayer.Idled:connect(function()
+    VirtualUser:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
     wait(1)
-    game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    VirtualUser:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
 
 -- Call the anti-ban function
