@@ -1,0 +1,21 @@
+-- Define the teleport function
+local function teleportToLocation(cframe)
+    -- Get the player's character
+    local character = game.Players.LocalPlayer.Character
+    
+    -- Check if the character exists
+    if character then
+        -- Get the HumanoidRootPart
+        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+        
+        -- Check if the HumanoidRootPart exists
+        if humanoidRootPart then
+            -- Set the CFrame of the HumanoidRootPart to the desired location
+            humanoidRootPart.CFrame = cframe
+        end
+    end
+end
+
+-- Example usage: Teleport to the specified CFrame
+local cframe = CFrame.new(1.75, 3, 19237947, -3.58797455, 0, 0, 1, 0, 1, 0, -1, 0, 0)
+teleportToLocation(cframe)
