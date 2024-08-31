@@ -15,22 +15,20 @@ local Tabs = {
 }
 local Options = Fluent.Options
 
--- Create a toggle button for auto-click
-local autoClickToggle = Tabs.Main:AddToggle({
-    Title = "Auto Click",
-    Default = false,
-    Callback = function(bool)
-        if bool then
-            -- Enable auto-click
-            while bool do
+local tab = Tabs.Main
+tab:CreateToggle("Auto Click", false, function(bool)
+    if bool == true then
+        _G.AutoClick = true
+        spawn(function()
+            while _G.AutoClick == true do
                 game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click:InvokeServer()
-                wait()
+                wait(0.5) -- add a 0.5 second delay between each invocation
             end
-        else
-            -- Disable auto-click
-        end
+        end)
+    else
+        _G.AutoClick = false
     end
-})
+end)
 
 -- Add the anti-ban function
 local function AntiBan()
